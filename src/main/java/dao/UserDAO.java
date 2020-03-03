@@ -1,59 +1,13 @@
 package dao;
 
 import model.User;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO {
-    private Connection connection;
+public interface UserDAO {
+    List<User> getAllUsers();
+    void addUser(User user);
+    void deleteUser(int id);
+    void updateUser(User user);
 
-    public UserDAO(Connection connection) {
-        this.connection = connection;
-    }
 
-    public List<User> getAllUsers() {
-        List<User> list = new ArrayList<>();
-        try (Statement stmt = connection.createStatement(); ResultSet r = stmt.executeQuery("SELECT * FROM users")) {
-            while (r.next()) {
-                list.add(new User(r.getInt(1), r.getString(2), r.getInt(3)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public void addUser(User user) {
-        String query = "INSERT INTO users (name,age) VALUES (?,?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, user.getName());
-            stmt.setInt(2, user.getAge());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteUser(int id) {
-        String query = "DELETE FROM users WHERE id=?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void updateUser(User user) {
-        String query = "UPDATE users SET name=?, age=? WHERE id=?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, user.getName());
-            stmt.setInt(2, user.getAge());
-            stmt.setInt(3, user.getId());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

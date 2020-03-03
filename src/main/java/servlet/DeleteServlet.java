@@ -1,5 +1,6 @@
 package servlet;
 
+import model.User;
 import service.UserService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = {"/delete"})
 public class DeleteServlet extends HttpServlet {
-    UserService service = new UserService();
+    UserService service = UserService.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
