@@ -4,6 +4,7 @@ import model.User;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+
 import java.util.List;
 
 public class UserHibernateDAO implements UserDAO {
@@ -46,7 +47,7 @@ public class UserHibernateDAO implements UserDAO {
 
     public User getUserById(int id) {
         Query query = session.createQuery("FROM User WHERE id=:id");
-        query.setParameter("id",id);
+        query.setParameter("id", id);
         return (User) query.uniqueResult();
     }
 }

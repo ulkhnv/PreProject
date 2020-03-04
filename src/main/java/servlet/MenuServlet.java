@@ -2,6 +2,7 @@ package servlet;
 
 import model.User;
 import service.UserService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +21,10 @@ public class MenuServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("name");
         int age = Integer.parseInt(req.getParameter("age"));
-        User user = new User(name,age);
+        User user = new User(name, age);
         service.addUser(user);
         resp.sendRedirect(req.getContextPath() + "/menu");
     }

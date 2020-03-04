@@ -1,44 +1,45 @@
 package service;
 
-import dao.UserHibernateDAO;
+import dao.UserDAO;
+import dao.UserDAOFactory;
 import model.User;
-import org.hibernate.SessionFactory;
-import util.DBHelper;
 
 import java.util.List;
 
 public class UserService {
-    private static UserService userService;
-    private SessionFactory sessionFactory;
 
-    private UserService(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    private static UserService userService;
+    private UserDAOFactory factory;
+
+    private UserService() {
+        factory = new UserDAOFactory();
     }
 
     public static UserService getInstance() {
         if (userService == null) {
-            userService = new UserService(DBHelper.getSessionFactory());
+            userService = new UserService();
         }
         return userService;
     }
 
     public List<User> getAllUsers() {
-        return getUserHibernateDAO().getAllUsers();
+        return getUserDAO().getAllUsers();
     }
 
     public void addUser(User user) {
-        getUserHibernateDAO().addUser(user);
+        getUserDAO().addUser(user);
     }
 
     public void deleteUser(int id) {
-        getUserHibernateDAO().deleteUser(id);
+        getUserDAO().deleteUser(id);
     }
 
     public void updateUser(User user) {
-        getUserHibernateDAO().updateUser(user);
+        getUserDAO().updateUser(user);
     }
 
-    public UserHibernateDAO getUserHibernateDAO() {
-        return new UserHibernateDAO(getInstance().sessionFactory.openSession());
+    public UserDAO getUserDAO() {
+        return factory.createUserDAO();
     }
+
 }
