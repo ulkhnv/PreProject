@@ -50,4 +50,24 @@ public class UserHibernateDAO implements UserDAO {
         query.setParameter("id", id);
         return (User) query.uniqueResult();
     }
+
+    @Override
+    public boolean validateUser(String name, String password) {
+        String hql = "SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM User u " +
+                "WHERE u.name=:name and u.password=:password";
+        Query query = session.createQuery(hql);
+        query.setParameter("name",name);
+        query.setParameter("password",password);
+        return (boolean) query.uniqueResult();
+    }
+
+    @Override
+    public String getUserRole(String name) {
+        String hql = "SELECT role FROM User WHERE name=:name";
+        Query query = session.createQuery(hql);
+        query.setParameter("name",name);
+        return (String) query.uniqueResult();
+    }
+
+
 }

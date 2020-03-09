@@ -38,8 +38,17 @@ public class UserService {
         getUserDAO().updateUser(user);
     }
 
+    public boolean validateUser(String name, String password) {
+        return getUserDAO().validateUser(name,password);
+    }
+
+    public String getUserRole(String name) {
+        return getUserDAO().getUserRole(name);
+    }
+
     public UserDAO getUserDAO() {
         return factory.createUserDAO();
     }
+
 
 }

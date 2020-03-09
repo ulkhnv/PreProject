@@ -8,6 +8,8 @@ public interface UserDAO {
     void addUser(User user);
     void deleteUser(int id);
     void updateUser(User user);
+    boolean validateUser(String name, String password);
+    String getUserRole(String name);
 
 
 }
